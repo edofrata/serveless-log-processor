@@ -1,6 +1,7 @@
 import boto3
 import os
-from datetime import datetime
+from datetime import datetime, timezone
+
 
 BUCKET_NAME = "serveless-log-demo-edofrata"
 REGION = "eu-north-1"
@@ -17,7 +18,7 @@ def generate_dummmy_log():
     [ERROR] Failed to connect to inventory service
     [INFO] Processing complete"""
     
-    now = datetime.utcnow().strftime("%Y-%m-%dT%H-%M-%S")
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%S")
     filename = f"log_{now}.log"
     filepath = os.path.join("scripts/logs/", filename)
     
@@ -25,6 +26,9 @@ def generate_dummmy_log():
         f.write(log_content)
         
     return filename, filepath
+
+
+
 
 def upload_log_t_s3(filename,filepath):
     try:
@@ -35,7 +39,9 @@ def upload_log_t_s3(filename,filepath):
     except Exception as e:
         print(f"Error uploading file to s3: {e}")
     
-    
 if __name__ == "__main__":
-    filename, filepath = generate_dummmy_log()
-    upload_log_t_s3(filename,filepath)
+    # filename, filepath = generate_dummmy_log()
+    # upload_log_t_s3(filename,filepath)
+    filename = "log_2025-04-08T13-58-50.log"
+    filepath = "scripts/logs/" + filename
+    upload_log_t_s3(filename,filepath)  
