@@ -40,8 +40,8 @@ def upload_log_t_s3(filename,filepath):
         print(f"Error uploading file to s3: {e}")
     
 if __name__ == "__main__":
-    # filename, filepath = generate_dummmy_log()
-    # upload_log_t_s3(filename,filepath)
-    filename = "log_2025-04-08T13-58-50.log"
-    filepath = "scripts/logs/" + filename
-    upload_log_t_s3(filename,filepath)  
+    filename, filepath = generate_dummmy_log()
+    upload_log_t_s3(filename,filepath)
+    # filename = "log_2025-04-08T13-58-50.log"
+    # filepath = "scripts/logs/" + filename
+    # upload_log_t_s3(filename,filepath)  
