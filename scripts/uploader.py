@@ -26,8 +26,47 @@ def generate_dummmy_log():
         f.write(log_content)
         
     return filename, filepath
+  
 
+def generate_dummmy_log_error():
+    log_content = """[INFO] Starting batch
+[ERROR] Database timeout
+[ERROR] Database timeout
+[ERROR] Inventory service failure
+[ERROR] API request timeout
+[ERROR] Data mismatch error
+[ERROR] Missing attribute error
+[INFO] Batch processing complete"""
+    
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%S")
+    filename = f"log_{now}.log"
+    filepath = os.path.join("scripts/logs/", filename)
 
+    os.makedirs("scripts/logs", exist_ok=True)
+
+    with open(filepath, "w") as f:
+        f.write(log_content)
+        
+    return filename, filepath
+
+def generate_dummmy_log_NoErrors():
+    log_content = """[INFO] Starting batch
+[INFO] Process Starting
+[INFO] Process Uploading
+[INFO] Process Evaulating
+[INFO] Process Completed
+[INFO] Batch processing complete"""
+    
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%S")
+    filename = f"log_{now}.log"
+    filepath = os.path.join("scripts/logs/", filename)
+
+    os.makedirs("scripts/logs", exist_ok=True)
+
+    with open(filepath, "w") as f:
+        f.write(log_content)
+        
+    return filename, filepath
 
 
 def upload_log_t_s3(filename,filepath):
@@ -40,7 +79,7 @@ def upload_log_t_s3(filename,filepath):
         print(f"Error uploading file to s3: {e}")
     
 if __name__ == "__main__":
-    filename, filepath = generate_dummmy_log()
+    filename, filepath = generate_dummmy_log_NoErrors()
     upload_log_t_s3(filename,filepath)
     # filename = "log_2025-04-08T13-58-50.log"
     # filepath = "scripts/logs/" + filename
